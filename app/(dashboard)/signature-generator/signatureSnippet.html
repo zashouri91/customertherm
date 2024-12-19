@@ -1,0 +1,37 @@
+<div style="font-family: Arial, sans-serif;">
+  <div style="margin-bottom: 10px;">
+    <img src="{{headshotUrl}}" alt="{{name}}'s Headshot" style="width: 100px; height: auto; border-radius: 50%;">
+  </div>
+  <div style="font-size: 16px; color: #333;">
+    <strong>{{name}}</strong><br>
+    <span>{{position}}</span><br>
+    <span>{{company}}</span><br>
+    <span>{{location}}</span>
+  </div>
+  <div style="margin-top: 10px;">
+    <span style="font-size: 14px;">Rate my service:</span><br>
+    {{#each ratingOptions}}
+      <img src="{{this.iconUrl}}" alt="Rating {{@index}}" style="cursor: pointer; width: 30px; height: auto; margin-right: 5px;" onclick="sendRating('{{uid}}', {{@index}}, '{{callbackUrl}}')">
+    {{/each}}
+  </div>
+</div>
+
+<script>
+  function sendRating(uid, rating, callbackUrl) {
+    const timestamp = new Date().toISOString();
+    const data = { uid, rating, timestamp };
+    fetch(callbackUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(response => {
+      if (response.ok) {
+        window.location.href = '{{feedbackFormUrl}}';
+      } else {
+        console.error('Error submitting rating.');
+      }
+    });
+  }
+</script>

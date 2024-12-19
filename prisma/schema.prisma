@@ -1,0 +1,99 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email       String    @unique
+  name        String
+  created_at  DateTime  @default(now()) @map("created_at")
+  updated_at  DateTime  @updatedAt @map("updated_at")
+  role        Role      @default(USER)
+  surveys     Survey[]  @relation("survey_users")
+  responses   Response[]
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Survey {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String
+  description String?
+  created_at  DateTime  @default(now()) @map("created_at")
+  updated_at  DateTime  @updatedAt @map("updated_at")
+  is_active   Boolean   @default(true) @map("is_active")
+  questions   Question[]
+  groups      Group[]   @relation("survey_groups")
+  locations   Location[] @relation("survey_locations")
+  users       User[]    @relation("survey_users")
+
+  @@map("surveys")
+}
+
+model Question {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  survey_id   String    @db.Uuid @map("survey_id")
+  survey      Survey    @relation(fields: [survey_id], references: [id])
+  type        QuestionType
+  text        String
+  required    Boolean   @default(true)
+  order       Int
+  options     Json?
+  logic_rules Json?     @map("logic_rules")
+  responses   Response[]
+
+  @@map("questions")
+}
+
+enum QuestionType {
+  NPS_EMOJI
+  NPS_STAR
+  NPS_NUMBER
+  DRIVER
+  OPEN_ENDED
+}
+
+model Response {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  question_id String    @db.Uuid @map("question_id")
+  question    Question  @relation(fields: [question_id], references: [id])
+  user_id     String    @db.Uuid @map("user_id")
+  user        User      @relation(fields: [user_id], references: [id])
+  value       String
+  created_at  DateTime  @default(now()) @map("created_at")
+
+  @@map("responses")
+}
+
+model Group {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String
+  created_at  DateTime  @default(now()) @map("created_at")
+  updated_at  DateTime  @updatedAt @map("updated_at")
+  surveys     Survey[]  @relation("survey_groups")
+
+  @@map("groups")
+}
+
+model Location {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String
+  created_at  DateTime  @default(now()) @map("created_at")
+  updated_at  DateTime  @updatedAt @map("updated_at")
+  surveys     Survey[]  @relation("survey_locations")
+
+  @@map("locations")
+}

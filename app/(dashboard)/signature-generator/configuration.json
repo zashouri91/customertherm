@@ -1,0 +1,52 @@
+{
+  "associate": {
+    "name": "{{name}}",
+    "title": "{{title}}",
+    "department": "{{department}}",
+    "company": "{{company}}",
+    "email": "{{email}}",
+    "headshotUrl": "{{headshotUrl}}",
+    "location": "{{location}}"
+  },
+  "rating": {
+    "options": [
+      { "label": "0", "iconUrl": "{{iconUrl0}}" },
+      { "label": "1", "iconUrl": "{{iconUrl1}}" },
+      { "label": "2", "iconUrl": "{{iconUrl2}}" },
+      { "label": "3", "iconUrl": "{{iconUrl3}}" },
+      { "label": "4", "iconUrl": "{{iconUrl4}}" },
+      { "label": "5", "iconUrl": "{{iconUrl5}}" },
+      { "label": "6", "iconUrl": "{{iconUrl6}}" },
+      { "label": "7", "iconUrl": "{{iconUrl7}}" },
+      { "label": "8", "iconUrl": "{{iconUrl8}}" },
+      { "label": "9", "iconUrl": "{{iconUrl9}}" },
+      { "label": "10", "iconUrl": "{{iconUrl10}}" }
+    ],
+    "callbackUrl": "{{callbackUrl}}",
+    "feedbackFormUrl": "{{feedbackFormUrl}}"
+  },
+  "theming": {
+    "brandColors": {
+      "primary": "{{primaryColor}}",
+      "secondary": "{{secondaryColor}}"
+    },
+    "fonts": {
+      "body": "{{bodyFont}}",
+      "heading": "{{headingFont}}"
+    }
+  },
+  "apiKeys": {
+    "serviceApiKey": "{{serviceApiKey}}"
+  },
+  "sampleData": {
+    "name": "John Doe",
+    "title": "Software Engineer",
+    "department": "Engineering",
+    "company": "Tech Corp",
+    "email": "john.doe@example.com",
+    "headshotUrl": "https://example.com/johndoe.jpg",
+    "location": "New York",
+    "callbackUrl": "https://example.com/callback",
+    "feedbackFormUrl": "https://example.com/feedback"
+  }
+}
